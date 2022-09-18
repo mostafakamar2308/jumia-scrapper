@@ -40,10 +40,11 @@ const { getAllProducts } = require("../fetchFn");
 // };
 
 const getPhones = async (req, res) => {
+  const { page } = req.query;
   const phones = [];
   const phonesArr = await getAllProducts(
     "https://www.jumia.com.eg/smartphones/?page=",
-    1,
+    page || 1,
     "a.core",
     phones
   );
@@ -51,10 +52,12 @@ const getPhones = async (req, res) => {
 };
 
 const getGroceries = async (req, res) => {
+  const { page } = req.query;
+  let pg = 1;
   const groceries = [];
   const groceriesArr = await getAllProducts(
     "https://www.jumia.com.eg/groceries/?page=",
-    1,
+    page || pg,
     "a.core",
     groceries
   );
