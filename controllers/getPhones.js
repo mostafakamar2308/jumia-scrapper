@@ -53,15 +53,26 @@ const getPhones = async (req, res) => {
 
 const getGroceries = async (req, res) => {
   const { page } = req.query;
-  let pg = 1;
   const groceries = [];
   const groceriesArr = await getAllProducts(
     "https://www.jumia.com.eg/groceries/?page=",
-    page || pg,
+    page || 1,
     "a.core",
     groceries
   );
   res.status(200).json({ nbHits: groceries.length, groceriesArr });
 };
 
-module.exports = { getPhones, getGroceries };
+const getComputers = async (req, res) => {
+  const { page } = req.query;
+  const computers = [];
+  const computersArr = await getAllProducts(
+    "https://www.jumia.com.eg/computers-tablets/?page=",
+    page || 1,
+    "a.core",
+    computers
+  );
+  res.status(200).json({ nbHits: computers.length, computersArr });
+};
+
+module.exports = { getPhones, getGroceries, getComputers };
