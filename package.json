@@ -14,5 +14,8 @@
     "mostafa"
   ],
   "author": "Mostafa Kamar",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5"
+  }
 }
