@@ -5,6 +5,23 @@ const PORT = 5000;
 
 app.use(express.json());
 app.use("/api/v1", phoneRoute);
+app.get("/", (req, res) => {
+  res.send(
+    `
+            <h1>Jumia Scrapper</h1>
+            <h2>Available Lists</h2>
+            <ul>
+                <li>Computers</li>
+                <li>Phones</li>
+                <li>Groceries</li>
+            </ul>
+            
+            <p>to reach any of the available lists go to (domain name/api/v1/"listName")</p>
+
+            <p>Please Stay patient specially when you try to get to the groceries list XD</p>
+        `
+  );
+});
 
 app.listen(PORT, () => {
   console.log("app is listening on port 5000");
