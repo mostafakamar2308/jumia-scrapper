@@ -3,11 +3,13 @@ const {
   getPhones,
   getGroceries,
   getComputers,
+  getOfficeFurniture,
 } = require("../controllers/getPhones");
-const phoneRoute = express.Router();
+const scrappingRoute = express.Router();
 
-phoneRoute.route("/phones").get(getPhones);
-phoneRoute.route("/groceries").get(getGroceries);
-phoneRoute.route("/computers").get(getComputers);
+scrappingRoute.route("/phones").get(getPhones);
+scrappingRoute.route("/groceries").get(getGroceries);
+scrappingRoute.route("/computers").get(getComputers);
+scrappingRoute.route("/officeFurniture").get(getOfficeFurniture);
 
-module.exports = phoneRoute;
+module.exports = scrappingRoute;

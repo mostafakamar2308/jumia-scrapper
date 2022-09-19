@@ -1,43 +1,18 @@
 const { getAllProducts } = require("../fetchFn");
+const fs = require("fs");
+const path = require("path");
 
-// const fetchAllPhones = async (num) => {
-//   const selector = "a.core";
-//   const phones = [];
-
-//   const url = "https://www.jumia.com.eg/smartphones/?page=";
-//   let num = 1;
-//   try {
-//     let newArr = [];
-//     const respose = await axios.get(url + num);
-//     const html = respose.data;
-//     const $ = cheerio.load(html);
-
-//     $(`${selector}`).each((_id, element) => {
-//       const phone = $(element);
-//       const link = phone.attr("href");
-//       const outOfStock = phone.find("div.bdg _oos _xs").text();
-//       if (!outOfStock) {
-//         const href = "https://www.jumia.com.eg" + link;
-//         const title = phone.find("h3.name").text();
-//         const price = phone.find("div.prc").text();
-//         const img = phone.find("img.img").attr("data-src");
-//         newArr.push({ title, href, price, img });
-//       }
-//     });
-
-//     if (newArr.length > 0) {
-//       phones.push(...newArr);
-//       num++;
-//       fetchAllPhones();
-//     } else {
-//       let finalArr = phones.filter((phone) => phone.title != "");
-//       console.log(finalArr.length);
-//       return finalArr;
-//     }
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
+const writeData = (data, fileName) => {
+  const arrString = JSON.stringify(data);
+  fs.writeFile(
+    path.join(__dirname, "..", "data", `${fileName}.json`),
+    arrString,
+    "utf8",
+    (err) => {
+      if (err) console.log(err);
+    }
+  );
+};
 
 const getPhones = async (req, res) => {
   const { page } = req.query;
@@ -48,7 +23,10 @@ const getPhones = async (req, res) => {
     "a.core",
     phones
   );
-  res.status(200).json({ nbHits: phones.length, phonesArr });
+  //   writeData(phonesArr, "../phones.json");
+  //   fs.writeFileSync("", JSON.stringify({ phonesArr: phonesArr }));
+  writeData(phonesArr, "phones");
+  return res.status(200).json({ nbHits: phones.length, phonesArr });
 };
 
 const getGroceries = async (req, res) => {
@@ -60,6 +38,7 @@ const getGroceries = async (req, res) => {
     "a.core",
     groceries
   );
+  writeData(groceriesArr, "groceries");
   res.status(200).json({ nbHits: groceries.length, groceriesArr });
 };
 
@@ -72,7 +51,22 @@ const getComputers = async (req, res) => {
     "a.core",
     computers
   );
+  writeData(computersArr, "computers");
   res.status(200).json({ nbHits: computers.length, computersArr });
 };
+("");
 
-module.exports = { getPhones, getGroceries, getComputers };
+const getOfficeFurniture = async (req, res) => {
+  const { page } = req.query;
+  const office = [];
+  const officeArr = await getAllProducts(
+    "https://www.jumia.com.eg/home-office-furniture/?page=",
+    page || 1,
+    "a.core",
+    office
+  );
+  writeData(officeArr, "officeFurniture");
+  res.status(200).json({ nbHits: office.length, officeArr });
+};
+
+module.exports = { getPhones, getGroceries, getComputers, getOfficeFurniture };
