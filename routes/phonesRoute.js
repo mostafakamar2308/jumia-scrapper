@@ -8,6 +8,7 @@ const {
 const scrappingRoute = express.Router();
 
 scrappingRoute.route("/phones").get(getPhones);
+console.log("LOL");
 scrappingRoute.route("/groceries").get(getGroceries);
 scrappingRoute.route("/computers").get(getComputers);
 scrappingRoute.route("/officeFurniture").get(getOfficeFurniture);
